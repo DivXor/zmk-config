@@ -1,0 +1,9 @@
+file_format: "1"
+id: kometa
+name: kometa
+type: shield
+url: https://github.com/inpudiy/KOMETA
+requires: [pro_micro]
+siblings:
+  - kometa_left
+  - kometa_right

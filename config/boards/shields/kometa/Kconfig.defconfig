@@ -1,0 +1,19 @@
+if SHIELD_KOMETA_LEFT
+
+config ZMK_KEYBOARD_NAME
+    default "kometa"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+endif
+
+if SHIELD_KOMETA_LEFT || SHIELD_KOMETA_RIGHT
+
+config ZMK_SPLIT
+    default y
+
+config ZMK_BLE
+    default y
+
+endif

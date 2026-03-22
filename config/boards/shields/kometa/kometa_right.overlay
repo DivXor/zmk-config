@@ -1,0 +1,23 @@
+#include "kometa.dtsi"
+
+&default_transform {
+    col-offset = <6>;
+};
+
+&kscan0 {
+    col-gpios 
+        = <&pro_micro 21 GPIO_ACTIVE_HIGH>   // col6
+        , <&pro_micro 10 GPIO_ACTIVE_HIGH>   // col7
+        , <&pro_micro 16 GPIO_ACTIVE_HIGH>   // col8
+        , <&pro_micro 15 GPIO_ACTIVE_HIGH>   // col9
+        , <&pro_micro 18 GPIO_ACTIVE_HIGH>   // co10
+        , <&pro_micro 19 GPIO_ACTIVE_HIGH>   // co11
+        ;
+
+    row-gpios 
+        = <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   // row0
+        , <&pro_micro 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   // row1
+        , <&pro_micro 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>    // row2
+        , <&pro_micro 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>    // row3
+        ;
+};

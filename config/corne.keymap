@@ -1,0 +1,97 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+
+#define DEFAULT 0
+#define LOWER   1
+#define RAISE   2
+#define ADJUST  3
+
+/ {
+        behaviors {
+          tp: tap_preferred {
+            compatible = "zmk,behavior-hold-tap";
+            label = "TAP_PREFERRED";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <0>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+          }; 
+        };
+
+        conditional_layers {
+          compatible = "zmk,conditional-layers";
+          tri_layer {
+              if-layers = <LOWER RAISE>;
+              then-layer = <ADJUST>;
+          };
+        };
+
+        keymap {
+                compatible = "zmk,keymap";
+
+                default_layer {
+// -----------------------------------------------------------------------------------------
+// | ESC  |  Q  |  W  |  E  |  R  |    T    |   |  Y  |  U   |  I  |  O  |  P  | BKSP |
+// | CTRL |  A  |  S  |  D  |  F  |    G    |   |  H  |  J   |  K  |  L  |  ;  |  '   |
+// | SHFT |  Z  |  X  |  C  |  V  |    B    |   |  N  |  M   |  ,  |  .  |  /  | SHFT |
+//                    | GUI | LWR | ALT/SPC |   | HYPER/ENT | RSE  | ALT |
+                        bindings = <
+   &kp ESC   &kp Q &kp W &kp E &kp R &kp T            &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
+   &kp LCTRL &kp A &kp S &kp D &kp F &kp G            &kp H &kp J  &kp K     &kp L   &kp SEMI &tp LC(LS(RALT)) SQT
+   &kp LSHFT &kp Z &kp X &kp C &kp V &kp B            &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp RSHFT 
+               &kp LGUI &mo LOWER    &tp LALT RET   &tp LC(LS(LA(LGUI))) SPACE &mo RAISE &kp RALT
+                        >;
+                };
+
+                lower_layer {
+// -----------------------------------------------------------------------------------------
+// |      |  !  |  @  |  #  |  $  |    %     |   |  ^  |  &  |  *  |  (  |  )  |   \   |
+// |      |  1  |  2  |  3  |  4  |    5     |   |  -  |  =  |  `  |  {  |  }  |  "|"  |
+// | SHFT |  6  |  7  |  8  |  9  |    0     |   |  _  |  +  |  ~  |  [  |  ]  | RSHFT |
+//                     | GUI |     | ALT/ENT |   | HYPER/SPACE |   |  ALT  |
+                        bindings = <
+   &trans    &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT   &kp CARET  &kp AMPS  &kp KP_MULTIPLY &kp LPAR &kp RPAR &kp BSLH
+   &trans    &kp N1   &kp N2 &kp N3   &kp N4   &kp N5      &kp MINUS  &kp EQUAL &kp GRAVE       &kp LBRC &kp RBRC &kp PIPE
+   &kp LSHFT &kp N6   &kp N7 &kp N8   &kp N9   &kp N0      &kp UNDER  &kp PLUS  &kp TILDE       &kp LBKT &kp RBKT &kp RSHFT
+                         &kp LGUI &trans  &tp LALT RET     &tp LC(LS(LA(LGUI))) SPACE &trans &kp RALT
+                        >;
+                };
+
+                raise_layer {
+// -----------------------------------------------------------------------------------------
+// |       |  F1  |  F2  |  F3  |  F4  |  F5  |    |  F6  |  F7  |  F8  |  F9  |  F10  |   |
+// |  TAB  |      |      |      |      |      |    |  LFT |  DWN |  UP  |  RGT |       |   | 
+// |       |      |      |      |      |      |    |      |      |      |      |       |   |
+//                       |      |      |      |    |      |      |      |
+                        bindings = <
+   &trans    &kp F1   &kp F2   &kp F3   &kp F4   &kp F5      &kp F6   &kp F7   &kp F8 &kp F9    &kp F10 &trans
+   &kp TAB   &trans   &trans   &trans   &trans   &trans      &kp LEFT &kp DOWN &kp UP &kp RIGHT &trans  &trans
+   &trans    &trans   &trans   &trans   &trans   &trans      &trans   &trans   &trans &trans    &trans  &trans
+                               &trans   &trans   &trans      &trans   &trans   &trans
+                        >;
+                };
+
+                adjust_layer {
+// -----------------------------------------------------------------------------------------
+// | OUT_B | OUT_U|      |       |       |            |        |    |    |    |    |    |    |
+// |       | Prev | Next | Vol - | Vol + | Play/Pause |        |    |    |    |    |    |    |  
+// | BTCLR | BT1  | BT2  | BT3   | BT4   | BT5        |        |    |    |    |    |    |    |
+//                       |       |       |            |        |    |    |    |    
+                        bindings = <
+   &out OUT_BLE  &out OUT_USB  &trans       &trans       &trans       &trans            &trans  &trans  &trans  &trans  &trans &trans
+   &trans        &kp C_PREV    &kp C_NEXT   &kp C_VOL_DN &kp C_VOL_UP &kp C_PP          &trans  &trans  &trans  &trans  &trans &trans
+   &bt BT_CLR    &bt BT_SEL 0  &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4      &trans  &trans  &trans  &trans  &trans &trans
+                          	            &trans       &trans       &trans            &trans  &trans  &trans
+                        >;
+                };
+        };
+};
