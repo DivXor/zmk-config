@@ -36,8 +36,10 @@ between boards:
   | `C`+`V` | Paste |
   | `X`+`V` | Cut |
 
-- **ZMK Studio** enabled on every board — live-tune the keymap over USB from
-  <https://studio.zmk.fun> without reflashing (see below).
+- **ZMK Studio** — live-tune the keymap over USB from
+  <https://studio.zmk.fun> without reflashing — enabled on every central
+  build (corne/kometa left halves, totem dongle, corne dongle). Not on the
+  universal dongle; see [Dongle builds](#dongle-builds).
 - Key-position labels via [`zmk-helpers`](https://github.com/urob/zmk-helpers)
   (corne uses the generic 42-key header, totem has a dedicated one, kometa uses
   numeric positions from its shield definition).
@@ -120,6 +122,10 @@ them (prospector displays "Totem…"/"Corne…" layer names). Caveats:
 
 - The dongle boots into the totem config (layer 0); press Z+X once after
   replug to switch.
+- No ZMK Studio on this firmware: the totem and corne config regions use
+  different position maps, so no single physical layout can describe both.
+  Edit `universal_dongle.keymap` and reflash (the corne dongle build gives
+  Studio access to the corne keymap).
 - Only power the keyboard matching the active config — keys of the "wrong"
   board arrive scrambled.
 - Six bonded peripherals on one central is untested territory; verify it

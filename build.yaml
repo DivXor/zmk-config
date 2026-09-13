@@ -56,10 +56,11 @@ include:
 
   # Universal dongle: totem + corne/kometa configs in one firmware,
   # switch between them with the Z+X combo (see universal_dongle.keymap).
+  # No ZMK Studio here: one physical layout cannot represent both
+  # keymap position schemes (totem 38-pos vs corne/kometa 42-pos).
   - board: xiao_ble//zmk
     shield: universal_dongle prospector_adapter
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
-    snippet: zmk-usb-logging studio-rpc-usb-uart
+    snippet: zmk-usb-logging
     artifact-name: universal-dongle
 
   # Settings reset

@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: MIT
+
+if SHIELD_CORNE_DONGLE
+
+# Max 16 characters in keyboard name
+config ZMK_KEYBOARD_NAME
+    default "CORNE DONGLE"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+config ZMK_SPLIT
+    default y
+
+# Bond all four halves: corne L/R + kometa L/R; whichever pair is powered on
+# will connect to the central.
+config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
+    default 4
+
+# ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS (4) + 2 spare BT host profiles
+config BT_MAX_CONN
+    default 6
+
+config BT_MAX_PAIRED
+    default 6
+
+endif
