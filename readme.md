@@ -91,12 +91,56 @@ peripherals. Pair left half first, then right, for correct battery order.
 - Soft-off is enabled (`CONFIG_ZMK_PM_SOFT_OFF=y`): hold the reset button for a
   few seconds to fully power the board down.
 
+## Dongle builds
+
+The XIAO dongle hardware can serve as a USB receiver for all keyboards, not
+just the totem. Two extra dongle firmwares are built for it:
+
+| Firmware | Drives | Config switching | Peripheral budget |
+|---|---|---|---|
+| `totem-dongle` | totem | fixed keymap | 2 |
+| `corne-dongle` | corne + kometa | fixed keymap (shared 42 positions) | 4 |
+| `universal-dongle` | all three | **Z+X combo** swaps between configs | 6 |
+
+### Corne + kometa through a dongle
+
+Corne and kometa share the identical 42-position matrix, so `corne-dongle`
+(its keymap is `corne.keymap`) drives either board's halves: flash the
+`corne-dongle-left/right` and `kometa-dongle-left/right` artifacts onto the
+halves (peripheral mode), bond them to the dongle, and power on whichever
+board you want. Note kometa's outer columns act as corne keys through the
+dongle (`[`/`]`/`\`/grave become ESC/BSPC/TAB/shift).
+
+### Universal dongle
+
+`universal-dongle` carries both configurations in one firmware (`config/
+universal_dongle.keymap`): totem as layers 0–3, corne/kometa as layers 4–7.
+Press **Z+X** — the same physical gesture on every board — to toggle between
+them (prospector displays "Totem…"/"Corne…" layer names). Caveats:
+
+- The dongle boots into the totem config (layer 0); press Z+X once after
+  replug to switch.
+- Only power the keyboard matching the active config — keys of the "wrong"
+  board arrive scrambled.
+- Six bonded peripherals on one central is untested territory; verify it
+  works with your hardware.
+
+### Pairing halves to a dongle
+
+Halves bond to exactly **one central**. To move a half between standalone
+and dongle use: flash the appropriate firmware, flash the `settings_reset`
+image onto the half to clear old bonds, then pair it to the dongle (peripherals
+that are not bonded advertise automatically — the dongle connects as they
+wake). Pairing left first keeps battery reporting order correct.
+
 ## Building & flashing
 
 1. Push (or open a PR) — GitHub Actions builds all firmware automatically.
 2. Download the artifact for your half from the **Actions** tab
    (`corne_left`, `corne_right`, `kometa_left`, `kometa_right`,
-   `totem-dongle`, `totem-dongle-left`, `totem-dongle-right`).
+   `totem-dongle`, `totem-dongle-left`, `totem-dongle-right`,
+   `corne-dongle`, `corne-dongle-left/right`, `kometa-dongle-left/right`,
+   `universal-dongle`).
 3. nice!nano / XIAO: double-tap the reset button, then drag the `.uf2` file
    onto the mounted drive.
 
@@ -127,15 +171,18 @@ utility layer, to switch hosts.
 ## Repo layout
 
 ```
-build.yaml                    # per-shield build matrix
+build.yaml                    # per-shield build matrix (incl. dongle variants)
 config/
-├── corne.keymap|conf         # primary
+├── corne.keymap|conf         # primary; also serves corne-dongle
 ├── totem.keymap|conf         # + boards/shields/totem (dongle shield)
 ├── kometa.keymap|conf        # + boards/shields/kometa (custom shield)
+├── universal_dongle.keymap   # totem + corne configs for universal-dongle
+├── boards/shields/corne_dongle/       # keyless central shield (corne/kometa)
+├── boards/shields/universal_dongle/   # keyless central shield (all boards)
 ├── includes/
 │   ├── behaviours_homerow_mods.dtsi   # shared positional homerow mods
 │   └── combos.dtsi                     # shared combos (totem & corne labels)
-└── west.yml                  # ZMK/zmk-helpers/prospector pinned to commit SHAs
+└── west.yml                  # zmk/zmk-helpers/prospector pinned to commit SHAs
 ```
 
 ZMK, zmk-helpers, and the prospector module are pinned to exact commit SHAs in
