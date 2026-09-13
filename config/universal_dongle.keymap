@@ -1,0 +1,315 @@
+// ZMK includes
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/ext_power.h>
+
+/*
+ * Universal dongle keymap: two board configurations in one firmware.
+ *
+ * Layer groups:
+ *   0-3   Totem config        (totem-native 38 positions, padded to 42)
+ *   4-7   Corne/Kometa config (shared 42 positions)
+ *
+ * Switch configurations with the Z+X combo - the same physical gesture on
+ * every board, defined per group on native position numbers:
+ *   on totem layers:  Z+X = positions 21 22 -> &to 4 (corne/kometa config)
+ *   on corne layers:  Z+X = positions 25 26 -> &to 0 (totem config)
+ *
+ * The dongle boots into layer 0 (totem). After replugging the dongle, press
+ * Z+X once if the corne/kometa config is wanted. Only power the keyboard that
+ * matches the active config; keys of the "wrong" board arrive scrambled.
+ */
+
+#define T_BASE 0
+#define T_NUM   1
+#define T_MED   2
+#define T_FN    3
+#define C_BASE  4
+#define C_LWR   5
+#define C_RSE   6
+#define C_ADJ   7
+
+/ {
+    behaviors {
+        // Totem's layer-tap for the Fn pinky key and the SQT key
+        lc: layer_change {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <200>;
+            require-prior-idle-ms = <125>;
+            bindings = <&to>, <&kp>;
+        };
+
+        // Corne's tap-preferred for the thumb keys
+        tp: tap_preferred {
+            compatible = "zmk,behavior-hold-tap";
+            label = "TAP_PREFERRED";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <0>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+
+        // Totem positional homerow mods (totem-native positions)
+        // hold-triggers: opposite-hand keys + all thumb keys
+        hmt_l: homerow_mods_totem_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+            flavor = "balanced";
+            tapping-term-ms = <300>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            hold-trigger-key-positions = <5 6 7 8 9 15 16 17 18 19 26 27 28 29 30 31 32 33 34 35 36 37>;
+            hold-trigger-on-release;
+        };
+
+        hmt_r: homerow_mods_totem_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+            flavor = "balanced";
+            tapping-term-ms = <300>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            hold-trigger-key-positions = <0 1 2 3 4 10 11 12 13 14 20 21 22 23 24 25 32 33 34 35 36 37>;
+            hold-trigger-on-release;
+        };
+
+        hmt_shift_l: homerow_shift_totem_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            hold-trigger-key-positions = <5 6 7 8 9 15 16 17 18 19 26 27 28 29 30 31 32 33 34 35 36 37>;
+        };
+
+        hmt_shift_r: homerow_shift_totem_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            hold-trigger-key-positions = <0 1 2 3 4 10 11 12 13 14 20 21 22 23 24 25 32 33 34 35 36 37>;
+        };
+
+        // Corne/Kometa positional homerow mods (corne-native positions)
+        hmc_l: homerow_mods_corne_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+            flavor = "balanced";
+            tapping-term-ms = <300>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            hold-trigger-key-positions = <6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 36 37 38 39 40 41>;
+            hold-trigger-on-release;
+        };
+
+        hmc_r: homerow_mods_corne_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+            flavor = "balanced";
+            tapping-term-ms = <300>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38 39 40 41>;
+            hold-trigger-on-release;
+        };
+
+        hmc_shift_l: homerow_shift_corne_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            hold-trigger-key-positions = <6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 36 37 38 39 40 41>;
+        };
+
+        hmc_shift_r: homerow_shift_corne_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38 39 40 41>;
+        };
+    };
+
+    macros {
+        region_capture2: region_capture2 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press>,
+                <&kp RCTRL>,
+                <&macro_tap>,
+                <&kp K_APP>,
+                <&macro_release>,
+                <&kp RCTRL>;
+
+            label = "REGION_CAPTURE2";
+        };
+    };
+
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer {
+            if-layers = <C_LWR C_RSE>;
+            then-layer = <C_ADJ>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+
+        // ---- totem group combos (base layer of the totem config) ----
+        combo_t_escape_left { timeout-ms = <40>; bindings = <&kp ESC>;     key-positions = <0 1>;       layers = <T_BASE>; require-prior-idle-ms = <200>; slow-release; };
+        combo_t_escape     { timeout-ms = <40>; bindings = <&kp ESC>;      key-positions = <16 17>;     layers = <T_BASE>; };
+        combo_t_delete     { timeout-ms = <40>; bindings = <&kp DELETE>;   key-positions = <12 13>;     layers = <T_BASE>; require-prior-idle-ms = <100>; };
+        combo_t_enter      { timeout-ms = <40>; bindings = <&kp ENTER>;    key-positions = <10 11 12>;  layers = <T_BASE>; require-prior-idle-ms = <220>; slow-release; };
+        combo_t_caps_word  { timeout-ms = <50>; bindings = <&caps_word>;   key-positions = <12 13 16 17>; layers = <T_BASE>; };
+        combo_t_copy       { timeout-ms = <50>; bindings = <&kp LG(C)>;    key-positions = <22 23>;     layers = <T_BASE>; require-prior-idle-ms = <120>; };
+        combo_t_paste      { timeout-ms = <50>; bindings = <&kp LG(V)>;    key-positions = <23 24>;     layers = <T_BASE>; require-prior-idle-ms = <120>; };
+        combo_t_cut        { timeout-ms = <40>; bindings = <&kp LG(X)>;    key-positions = <22 24>;     layers = <T_BASE>; require-prior-idle-ms = <120>; };
+
+        // switch to the corne/kometa config (works on every totem layer)
+        combo_t_to_corne   { timeout-ms = <40>; bindings = <&to C_BASE>;  key-positions = <21 22>;     layers = <T_BASE T_NUM T_MED T_FN>; require-prior-idle-ms = <200>; slow-release; };
+
+        // ---- corne/kometa group combos (base layer of the corne config) ----
+        combo_c_escape_left { timeout-ms = <40>; bindings = <&kp ESC>;     key-positions = <1 2>;        layers = <C_BASE>; require-prior-idle-ms = <200>; slow-release; };
+        combo_c_escape      { timeout-ms = <40>; bindings = <&kp ESC>;     key-positions = <19 20>;     layers = <C_BASE>; };
+        combo_c_delete      { timeout-ms = <40>; bindings = <&kp DELETE>;  key-positions = <15 16>;     layers = <C_BASE>; require-prior-idle-ms = <100>; };
+        combo_c_enter       { timeout-ms = <40>; bindings = <&kp ENTER>;   key-positions = <13 14 15>;  layers = <C_BASE>; require-prior-idle-ms = <220>; slow-release; };
+        combo_c_caps_word   { timeout-ms = <50>; bindings = <&caps_word>;   key-positions = <15 16 19 20>; layers = <C_BASE>; };
+        combo_c_copy        { timeout-ms = <50>; bindings = <&kp LG(C)>;    key-positions = <26 27>;     layers = <C_BASE>; require-prior-idle-ms = <120>; };
+        combo_c_paste       { timeout-ms = <50>; bindings = <&kp LG(V)>;    key-positions = <27 28>;     layers = <C_BASE>; require-prior-idle-ms = <120>; };
+        combo_c_cut         { timeout-ms = <40>; bindings = <&kp LG(X)>;    key-positions = <26 28>;     layers = <C_BASE>; require-prior-idle-ms = <120>; };
+
+        // switch to the totem config (works on every corne layer)
+        combo_c_to_totem    { timeout-ms = <40>; bindings = <&to T_BASE>;  key-positions = <25 26>;     layers = <C_BASE C_LWR C_RSE C_ADJ>; require-prior-idle-ms = <200>; slow-release; };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        // ================= Totem configuration =================
+
+        totem_base_layer {
+            display-name = "Totem Base";
+            label = "T-BASE";
+
+            bindings = <
+                &kp Q              &kp W           &kp E          &kp R          &kp T                                &kp Y   &kp U            &kp I          &kp O           &kp P
+                &hmt_shift_l LSHFT A &hmt_l LCTRL S &hmt_l LALT D &hmt_l LGUI F &kp G                                &kp H   &hmt_r RGUI J    &hmt_r RALT K  &hmt_r RCTRL L  &hmt_shift_r RSHFT SEMICOLON
+                &lt T_FN TAB       &kp Z           &kp X          &kp C          &kp V          &kp B                                &kp N   &kp M            &kp COMMA      &kp DOT         &kp SLASH    &lc T_MED SQT
+                                                                  &kp LGUI       &lt T_MED TAB  &lt T_NUM SPACE      &kp RET &lt T_NUM BSPC    &kp RC(RS(RA(RGUI)))
+                &none &none &none &none
+            >;
+        };
+
+        totem_num_layer {
+            display-name = "Totem Num";
+            label = "T-NUM";
+
+            bindings = <
+                &kp KP_MINUS              &kp KP_N7         &kp KP_N8          &kp KP_N9         &kp KP_DIVIDE       &trans    &trans              &trans          &trans          &kp COLON
+                &hmt_shift_l LSHFT KP_PLUS &hmt_l LCTRL KP_N4 &hmt_l LALT KP_N5 &hmt_l LGUI KP_N6 &kp KP_MULTIPLY     &kp LEFT  &hmt_r RGUI DOWN    &hmt_r RALT UP  &hmt_r RCTRL RIGHT  &hmt_shift_r RSHFT SEMICOLON
+                &trans     &kp KP_DOT     &kp KP_N1          &kp KP_N2         &kp KP_N3          &kp KP_N0           &trans    &trans              &trans          &trans          &trans    &trans
+                                                                  &trans       &trans     &kp SPACE             &trans    &trans              &trans
+                &none &none &none &none
+            >;
+        };
+
+        totem_media_layer {
+            display-name = "Totem Media";
+            label = "T-MEDIA";
+
+            bindings = <
+                &kp EXCL &kp AT    &kp HASH  &kp DLLR  &kp PRCNT    &kp CARET &kp AMPS     &kp ASTRK    &kp MINUS   &kp EQUAL
+                &kp LPAR &kp LEFT  &kp UP    &kp RIGHT &kp RPAR     &kp PG_UP &kp C_PREV   &kp C_PP     &kp C_NEXT  &kp HOME
+                &trans   &kp LBKT  &kp GRAVE &kp DOWN  &kp UNDER    &kp RBKT &kp PG_DN     &kp C_VOL_UP &kp C_MUTE  &kp C_VOL_DN  &kp END  &to T_BASE
+                                          &kp LALT  &kp LCTRL  &kp LSHFT    &trans &trans     &trans
+                &none &none &none &none
+            >;
+        };
+
+        totem_function_layer {
+            display-name = "Totem Fn";
+            label = "T-FN";
+
+            bindings = <
+                &sys_reset         &bt BT_CLR  &out OUT_TOG           &kp LG(LA(UP_ARROW))    &bt BT_SEL 0    &kp INSERT       &kp F7  &kp F8  &kp F9  &kp F12
+                &bootloader        &bt BT_NXT  &kp LG(LA(LEFT_ARROW)) &kp LG(LA(RIGHT_ARROW)) &bt BT_SEL 1    &kp SLCK         &kp F4  &kp F5  &kp F6  &kp F11
+                &trans  &region_capture2  &bt BT_PRV  &studio_unlock  &kp LG(LA(DOWN_ARROW))  &bt BT_SEL 2    &kp PAUSE_BREAK  &kp F1  &kp F2  &kp F3  &kp F10  &trans
+                                          &trans  &trans  &kp SPACE    &trans    &trans     &trans
+                &none &none &none &none
+            >;
+        };
+
+        // ================= Corne / Kometa configuration =================
+
+        corne_base_layer {
+            display-name = "Corne Base";
+            label = "C-BASE";
+
+            bindings = <
+                &kp ESC   &kp Q               &kp W &kp E &kp R &kp T            &kp Y &kp U      &kp I      &kp O     &kp P        &kp BSPC
+                &kp TAB   &hmc_shift_l LSHFT A &hmc_l LCTRL S &hmc_l LALT D &hmc_l LGUI F &kp G    &kp H &hmc_r RGUI J &hmc_r RALT K &hmc_r RCTRL L &hmc_shift_r RSHFT SEMI &kp SQT
+                &kp LSHFT &kp Z &kp X &kp C &kp V &kp B            &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp RSHFT
+                &kp LGUI &mo C_LWR    &tp LALT RET   &tp LC(LS(LA(LGUI))) SPACE &mo C_RSE &kp RALT
+            >;
+        };
+
+        corne_lower_layer {
+            display-name = "Corne Lower";
+            label = "C-LWR";
+
+            bindings = <
+                &trans    &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT   &kp CARET &kp AMPS  &kp ASTRK &kp LPAR &kp RPAR &kp BSLH
+                &trans    &kp N1   &kp N2 &kp N3   &kp N4   &kp N5      &kp MINUS &kp EQUAL &kp GRAVE &kp LBRC &kp RBRC &kp PIPE
+                &kp LSHFT &kp N6   &kp N7 &kp N8   &kp N9   &kp N0      &kp UNDER &kp PLUS  &kp TILDE &kp LBKT &kp RBKT &kp RSHFT
+                &kp LGUI &trans  &tp LALT RET     &tp LC(LS(LA(LGUI))) SPACE &trans &kp RALT
+            >;
+        };
+
+        corne_raise_layer {
+            display-name = "Corne Raise";
+            label = "C-RSE";
+
+            bindings = <
+                &kp F11   &kp F1   &kp F2   &kp F3   &kp F4   &kp F5      &kp F6   &kp F7   &kp F8   &kp F9    &kp F10  &kp F12
+                &trans    &trans   &trans   &trans   &trans   &trans      &kp LEFT &kp DOWN &kp UP &kp RIGHT &kp C_BRI_DEC &kp C_BRI_INC
+                &trans    &trans   &trans   &trans   &trans   &trans      &trans   &trans   &trans &trans    &trans   &trans
+                &trans   &trans   &trans      &trans   &trans   &trans
+            >;
+        };
+
+        corne_adjust_layer {
+            display-name = "Corne Adjust";
+            label = "C-ADJ";
+
+            bindings = <
+                &out OUT_BLE  &out OUT_USB  &trans       &trans       &trans       &trans            &sys_reset &bootloader &studio_unlock &bt BT_NXT &bt BT_PRV &trans
+                &trans        &kp C_PREV    &kp C_NEXT   &kp C_VOL_DN &kp C_VOL_UP &kp C_PP          &trans  &trans  &trans  &trans  &trans &trans
+                &bt BT_CLR    &bt BT_SEL 0  &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4      &trans  &trans  &trans  &trans  &trans &trans
+                &trans       &trans       &trans            &trans  &trans  &trans
+            >;
+        };
+    };
+};
