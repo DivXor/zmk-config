@@ -133,11 +133,24 @@ them (prospector displays "Totem…"/"Corne…" layer names). Caveats:
 
 ### Pairing halves to a dongle
 
-Halves bond to exactly **one central**. To move a half between standalone
-and dongle use: flash the appropriate firmware, flash the `settings_reset`
-image onto the half to clear old bonds, then pair it to the dongle (peripherals
-that are not bonded advertise automatically — the dongle connects as they
-wake). Pairing left first keeps battery reporting order correct.
+Bonds live in persistent settings storage and **survive reflashing**, and a
+bonded peripheral directed-advertises *only to its old central* — so stale
+bonds make a half invisible to any other dongle. Whenever you introduce a
+central/half combination that hasn't been bonded before:
+
+1. Flash the `settings_reset` artifact onto the **half** to wipe its bonds,
+   then flash the peripheral firmware you actually want on it.
+2. Flash `settings_reset` onto the **dongle** as well when you move it
+   between keyboard families (e.g. it previously lived as a totem dongle):
+   its six-device pairing pool still holds every old bond, which can block
+   new halves from pairing.
+3. Plug in the dongle, power the halves: unbonded peripherals advertise
+   automatically and the dongle connects as they appear. Introduce halves
+   one at a time; pairing left first keeps battery reporting order correct.
+
+Clearing the dongle wipes its split bonds too, so halves that were paired
+to it before (e.g. totem halves and a repurposed dongle) must be reset and
+re-paired as well.
 
 ## Building & flashing
 
