@@ -1,4 +1,0 @@
-# SPDX-License-Identifier: MIT
-
-config SHIELD_UNIVERSAL_DONGLE
-    def_bool $(shields_list_contains,universal_dongle)
