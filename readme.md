@@ -135,8 +135,12 @@ config/
 ├── includes/
 │   ├── behaviours_homerow_mods.dtsi   # shared positional homerow mods
 │   └── combos.dtsi                     # shared combos (totem & corne labels)
-└── west.yml                  # pinned to ZMK v0.3.0, zmk-helpers v0.3.0
+└── west.yml                  # ZMK/zmk-helpers/prospector pinned to commit SHAs
 ```
 
-ZMK and zmk-helpers are pinned to release tags (`v0.3.0`) in `west.yml` and the
-workflow — update them together when bumping firmware versions.
+ZMK, zmk-helpers, and the prospector module are pinned to exact commit SHAs in
+`west.yml` (and the reusable workflow is pinned to the same ZMK commit).
+Note: ZMK's release tags can't be used here — the last release (v0.3.0)
+predates the HWMv2 board names (`nice_nano//zmk`, `xiao_ble//zmk`) this
+config uses. Bump all SHAs together, deliberately, when you want newer
+firmware.

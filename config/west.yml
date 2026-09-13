@@ -9,13 +9,16 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: v0.3.0
+      # Pinned to a commit SHA of main: the HWMv2 board names used throughout
+      # this config (nice_nano//zmk, xiao_ble//zmk) only exist after the last
+      # release tag (v0.3.0). Bump the SHA deliberately.
+      revision: 641514a97db345f499dd50b0360e594270f008fe
       import: app/west.yml
     - name: prospector-zmk-module
       remote: carrefinho
-      revision: feat/new-status-screens
+      revision: ed98221f3b52b7066dbb10ba3af8a29150b93a5a
     - name: zmk-helpers
       remote: urob
-      revision: v0.3.0
+      revision: 7bcba18fc8df27303eb92a435d33ea870cc51f98
   self:
     path: config
