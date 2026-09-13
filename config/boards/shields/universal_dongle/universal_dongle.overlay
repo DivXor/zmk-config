@@ -1,0 +1,24 @@
+/*
+ * Universal dongle: keyless central for the XIAO BLE dongle hardware.
+ *
+ * One firmware for all three keyboards. The keymap (universal_dongle.keymap)
+ * carries two configurations and is switched at runtime with the Z+X combo:
+ *
+ *   layers 0-3  Totem config        (totem-native 38 positions)
+ *   layers 4-7  Corne/Kometa config (shared 42 positions)
+ *
+ * Drives totem, corne, and kometa halves flashed in peripheral mode.
+ */
+
+/ {
+    chosen {
+        zmk,kscan = &universal_dongle_kscan;
+    };
+
+    universal_dongle_kscan: kscan_1 {
+        compatible = "zmk,kscan-mock";
+        columns = <0>;
+        rows = <0>;
+        events = <0>;
+    };
+};
