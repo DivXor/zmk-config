@@ -113,6 +113,13 @@ just the totem. Two extra dongle firmwares are built for it:
 | `totem-dongle` | totem | fixed keymap | 2 |
 | `corne-dongle` | corne + kometa | fixed keymap (shared 42 positions) | 4 |
 
+Dongles never deep sleep — they're USB-powered and always connected, and a
+sleeping central couldn't be woken by the halves' keys anyway (the dongle has
+no key matrix). `config/corne_dongle.conf` and `config/totem_dongle.conf` pin
+this down against the shared `corne.conf`/`totem.conf` settings, which leak
+into the dongle builds through the shield-name resolution. The battery-driven
+halves still sleep on their own timers (30 min idle on corne).
+
 ### Corne + kometa through a dongle
 
 Corne and kometa share the identical 42-position matrix, so `corne-dongle`
