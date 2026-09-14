@@ -106,28 +106,34 @@ peripherals. Pair left half first, then right, for correct battery order.
 ## Dongle builds
 
 The XIAO dongle hardware can serve as a USB receiver for all keyboards, not
-just the totem. Two extra dongle firmwares are built for it:
+just the totem. Each keyboard family has its own dedicated dongle firmware:
 
-| Firmware | Drives | Config switching | Peripheral budget |
-|---|---|---|---|
-| `totem-dongle` | totem | fixed keymap | 2 |
-| `corne-dongle` | corne + kometa | fixed keymap (shared 42 positions) | 4 |
+| Firmware | Drives | Keymap | Peripheral slots | Host profiles |
+|---|---|---|---|---|
+| `totem-dongle` | totem halves | `totem.keymap` | 2 | 4 |
+| `corne-dongle` | corne halves (kometa halves in corne bindings) | `corne.keymap` | 4 | 2 |
+| `kometa-dongle` | kometa halves | `kometa.keymap` | 2 | 4 |
 
 Dongles never deep sleep — they're USB-powered and always connected, and a
 sleeping central couldn't be woken by the halves' keys anyway (the dongle has
-no key matrix). `config/corne_dongle.conf` and `config/totem_dongle.conf` pin
-this down against the shared `corne.conf`/`totem.conf` settings, which leak
-into the dongle builds through the shield-name resolution. The battery-driven
-halves still sleep on their own timers (30 min idle on corne).
+no key matrix). `config/corne_dongle.conf`, `config/totem_dongle.conf` and
+`config/kometa_dongle.conf` pin this down against the shared
+corne/totem/kometa settings, which leak into the dongle builds through the
+shield-name resolution. The battery-driven halves still sleep on their own
+timers (30 min idle on corne).
 
-### Corne + kometa through a dongle
+### Corne and kometa through a dongle
 
-Corne and kometa share the identical 42-position matrix, so `corne-dongle`
-(its keymap is `corne.keymap`) drives either board's halves: flash the
-`corne-dongle-left/right` and `kometa-dongle-left/right` artifacts onto the
-halves (peripheral mode), bond them to the dongle, and power on whichever
-board you want. Note kometa's outer columns act as corne keys through the
-dongle (`[`/`]`/`\`/grave become ESC/BSPC/TAB/shift).
+Halves in peripheral mode: flash the `corne-dongle-left/right` /
+`kometa-dongle-left/right` artifacts onto the halves, then flash the matching
+central onto the XIAO — `corne-dongle` for corne, `kometa-dongle` for the
+kometa's own keymap — and pair. Corne and kometa share the identical
+42-position matrix, so `corne-dongle` also drives kometa halves if they're
+bonded to it, just with corne bindings (kometa's outer columns then act as
+corne keys: `[`/`]`/`\`/grave become ESC/BSPC/TAB/shift); `kometa-dongle`
+gives the kometa its own bindings instead. Because bonds survive reflashing,
+flash `settings_reset` onto the dongle when moving it between keyboard
+families.
 
 ### Bluetooth host output (optional)
 
@@ -172,7 +178,8 @@ re-paired as well.
 2. Download the artifact for your half from the **Actions** tab
    (`corne_left`, `corne_right`, `kometa_left`, `kometa_right`,
    `totem-dongle`, `totem-dongle-left`, `totem-dongle-right`,
-   `corne-dongle`, `corne-dongle-left/right`, `kometa-dongle-left/right`).
+   `corne-dongle`, `kometa-dongle`, `corne-dongle-left/right`,
+   `kometa-dongle-left/right`).
 3. nice!nano / XIAO: double-tap the reset button, then drag the `.uf2` file
    onto the mounted drive.
 

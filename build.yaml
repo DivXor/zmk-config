@@ -30,8 +30,8 @@ include:
   - board: nice_nano//zmk
     shield: kometa_right
 
-  # Corne+Kometa dongle: one firmware drives either board's halves.
-  # Halves in peripheral mode (bond to the dongle instead of acting standalone).
+  # Dongle halves in peripheral mode (bond to the dongle instead of
+  # acting standalone); dedicated centrals for corne and kometa.
   - board: nice_nano//zmk
     shield: corne_left nice_view_adapter nice_view
     cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
@@ -53,6 +53,11 @@ include:
     cmake-args: -DCONFIG_ZMK_STUDIO=y
     snippet: zmk-usb-logging studio-rpc-usb-uart
     artifact-name: corne-dongle
+  - board: xiao_ble//zmk
+    shield: kometa_dongle prospector_adapter
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+    snippet: zmk-usb-logging studio-rpc-usb-uart
+    artifact-name: kometa-dongle
 
   # Settings reset
   - board: xiao_ble//zmk

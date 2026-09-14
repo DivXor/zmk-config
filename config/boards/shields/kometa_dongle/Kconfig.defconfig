@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: MIT
+
+if SHIELD_KOMETA_DONGLE
+
+# Max 16 characters in keyboard name
+config ZMK_KEYBOARD_NAME
+    default "KOMETA DONGLE"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+config ZMK_SPLIT
+    default y
+
+# Dedicated to the kometa halves: bond left + right
+config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
+    default 2
+
+# ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS (2) + 4 spare BT host profiles
+config BT_MAX_CONN
+    default 6
+
+config BT_MAX_PAIRED
+    default 6
+
+endif
