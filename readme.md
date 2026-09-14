@@ -67,6 +67,17 @@ Base layer:
 - The `HYPER` hold (`LC(LS(LA(LGUI))`) sits on the space thumb and the `'` key.
 - nice!view display enabled (`CONFIG_ZMK_DISPLAY=y`); layers carry
   `display-name`s so the screens show the active layer.
+- **Screens flash on updates** — nice!view is a memory-in-pixel panel, so
+  every redraw is a full-frame update with a brief visible flash: the left
+  screen flashes about once per second while typing (WPM graph), and every
+  layer switch / battery-percent step flashes both screens. That's inherent
+  to the panel type, not a fault.
+- **Battery tuning** (`config/corne.conf`): display updates pause after 30 s
+  idle (the MIP keeps showing the last frame) and the halves deep-sleep after
+  30 min idle — a keypress wakes them; Bluetooth reconnects within a few
+  seconds and unsaved Studio RAM changes are lost. Without this, ZMK's 10 ms
+  display tick runs ~100 CPU wakeups/second forever even when idle, which is
+  what drained the batteries. Both timeouts are tunable in the conf file.
 
 ## Totem
 
