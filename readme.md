@@ -40,8 +40,8 @@ between boards:
   <https://studio.zmk.fun> without reflashing — enabled on every central
   build (corne/kometa left halves, totem dongle, corne dongle).
 - Key-position labels via [`zmk-helpers`](https://github.com/urob/zmk-helpers)
-  (corne uses the generic 42-key header, totem has a dedicated one, kometa uses
-  numeric positions from its shield definition).
+  (corne and kometa use the generic 42-key header, totem has a dedicated
+  one).
 
 ## Corne (primary)
 
@@ -93,15 +93,14 @@ peripherals. Pair left half first, then right, for correct battery order.
 
 ## Kometa
 
-- Same homerow mods and combos as corne/totem. Copy/paste/cut were moved from
-  double-tap `C`/`V` tap-dances to combos (no more accidental Ctrl+C when
-  typing "success").
-- `LOWER` = numpad-style numbers/symbols; `RAISE` = F-keys, media, brightness;
-  **ADJUST** (via `ADJ` layer-tap thumbs) = Bluetooth, RGB underglow, soft-off,
-  reset/bootloader, studio unlock.
-- `RGUI`+`Space` (right pinky) opens Spotlight on macOS.
-- Soft-off is enabled (`CONFIG_ZMK_PM_SOFT_OFF=y`): hold the reset button for a
-  few seconds to fully power the board down.
+- The keymap is identical to the corne's — `config/kometa.keymap` is a
+  verbatim copy of `corne.keymap` (same base layout with `ESC`/`TAB`/`BSPC`
+  outer columns, positional homerow mods, shared combos, tri-layer
+  **ADJUST** by holding `LOWER` + `RAISE`).
+- The former kometa-only ADJUST keys (soft-off, RGB underglow, ext-power)
+  are gone with the merge; the RGB and ext-power bindings were never
+  actually configured on this board, and `CONFIG_ZMK_PM_SOFT_OFF=y` stays
+  in `kometa.conf` but no key invokes it.
 
 ## Dongle builds
 
@@ -111,8 +110,8 @@ just the totem. Each keyboard family has its own dedicated dongle firmware:
 | Firmware | Drives | Keymap | Peripheral slots | Host profiles |
 |---|---|---|---|---|
 | `totem-dongle` | totem halves | `totem.keymap` | 2 | 4 |
-| `corne-dongle` | corne halves (kometa halves in corne bindings) | `corne.keymap` | 4 | 2 |
-| `kometa-dongle` | kometa halves | `kometa.keymap` | 2 | 4 |
+| `corne-dongle` | corne halves (kometa halves too) | `corne.keymap` | 4 | 2 |
+| `kometa-dongle` | kometa halves | `kometa.keymap` (≡ `corne.keymap`) | 2 | 4 |
 
 Dongles never deep sleep — they're USB-powered and always connected, and a
 sleeping central couldn't be woken by the halves' keys anyway (the dongle has
@@ -127,13 +126,11 @@ timers (30 min idle on corne).
 Halves in peripheral mode: flash the `corne-dongle-left/right` /
 `kometa-dongle-left/right` artifacts onto the halves, then flash the matching
 central onto the XIAO — `corne-dongle` for corne, `kometa-dongle` for the
-kometa's own keymap — and pair. Corne and kometa share the identical
-42-position matrix, so `corne-dongle` also drives kometa halves if they're
-bonded to it, just with corne bindings (kometa's outer columns then act as
-corne keys: `[`/`]`/`\`/grave become ESC/BSPC/TAB/shift); `kometa-dongle`
-gives the kometa its own bindings instead. Because bonds survive reflashing,
-flash `settings_reset` onto the dongle when moving it between keyboard
-families.
+kometa. Since `kometa.keymap` is a verbatim copy of `corne.keymap`, the two
+dongle firmwares differ only in device name and peripheral slots (4 vs 2) —
+either can drive either family's halves once bonded. Because bonds survive
+reflashing, flash `settings_reset` onto the dongle when moving it between
+keyboard families.
 
 ### Bluetooth host output (optional)
 
@@ -193,8 +190,8 @@ All boards ship with ZMK Studio enabled on their central half. Connect the
 central over USB and open <https://studio.zmk.fun> (Chrome/Edge, WebUSB) to edit
 the keymap live. The keymap is locked at boot; unlock with:
 
-- **Corne**: ADJUST layer (hold LOWER + RAISE) → third key of the right top row.
-- **Kometa**: ADJUST layer (via the `ADJ` layer-tap thumb keys on LOWER/RAISE) → middle thumb keys.
+- **Corne/Kometa**: ADJUST layer (hold LOWER + RAISE) → third key of the right
+  top row.
 - **Totem**: Function layer → `STUDIO` key.
 
 Changes made in Studio live in RAM only — copy anything you like back into the
