@@ -14,6 +14,14 @@ include:
     snippet: zmk-usb-logging studio-rpc-usb-uart
     artifact-name: totem-dongle
 
+  # Totem without the dongle: left half is the central (pairs to hosts via
+  # BT profiles, right half reuses the totem-dongle-right firmware).
+  # Clear both halves' bonds (settings_reset) before switching modes.
+  - board: xiao_ble//zmk
+    shield: totem_left
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS=1 -DCONFIG_BT_MAX_CONN=6 -DCONFIG_BT_MAX_PAIRED=6 -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING=y -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY=y
+    artifact-name: totem-left-bt-central
+
   # Corne (standalone halves)
   - board: nice_nano//zmk
     shield: corne_left nice_view_adapter nice_view
@@ -71,6 +79,10 @@ include:
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/flo_totem.keymap
     artifact-name: totem-flo-left
   - board: xiao_ble//zmk
+    shield: totem_left
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS=1 -DCONFIG_BT_MAX_CONN=6 -DCONFIG_BT_MAX_PAIRED=6 -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING=y -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY=y -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/flo_totem.keymap
+    artifact-name: totem-flo-left-bt-central
+  - board: xiao_ble//zmk
     shield: totem_right
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/flo_totem.keymap
     artifact-name: totem-flo-right
@@ -108,6 +120,10 @@ include:
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/sen_totem.keymap
     artifact-name: totem-sen-left
   - board: xiao_ble//zmk
+    shield: totem_left
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS=1 -DCONFIG_BT_MAX_CONN=6 -DCONFIG_BT_MAX_PAIRED=6 -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING=y -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY=y -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/sen_totem.keymap
+    artifact-name: totem-sen-left-bt-central
+  - board: xiao_ble//zmk
     shield: totem_right
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/sen_totem.keymap
     artifact-name: totem-sen-right
@@ -144,6 +160,10 @@ include:
     shield: totem_left
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/cal_totem.keymap
     artifact-name: totem-cal-left
+  - board: xiao_ble//zmk
+    shield: totem_left
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS=1 -DCONFIG_BT_MAX_CONN=6 -DCONFIG_BT_MAX_PAIRED=6 -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING=y -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY=y -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/cal_totem.keymap
+    artifact-name: totem-cal-left-bt-central
   - board: xiao_ble//zmk
     shield: totem_right
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/cal_totem.keymap
