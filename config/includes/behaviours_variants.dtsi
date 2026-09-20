@@ -1,0 +1,86 @@
+/* Shared behaviors for the experimental keymap variants (flo / sen / cal).
+ *
+ * Requires <dt-bindings/zmk/keys.h> to be included by the keymap first.
+ *
+ * Includes:
+ *  - caps_word_kebab: builtin caps-word plus '-' in the continue list, so
+ *    kebab-case identifiers stay capitalized (snake_case already works).
+ *  - sqt_hyper: tap ''' / hold Hyper (Ctrl+Alt+Shift+Gui) for IntelliJ combos.
+ *  - region_capture2: IntelliJ region collapse macro (Ctrl+Menu), ported
+ *    from the stock totem keymap.
+ *  - thumb hold-taps: ESC/FUN, SPC/NAV, BSPC/FUN layer-taps with urob-style
+ *    balanced flavor.
+ */
+
+#define HYPER_L &kp LC(LS(LA(LGUI)))
+
+/ {
+    behaviors {
+        caps_word_kebab: caps_word_kebab {
+            compatible = "zmk,behavior-caps-word";
+            #binding-cells = <0>;
+            continue-list = <UNDERSCORE BACKSPACE DELETE MINUS>;
+            display-name = "Caps Word";
+        };
+
+        // Tap: ' | Hold: Hyper
+        sqt_hyper: sqt_hyper {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <0>;
+            bindings = <&kp LC(LS(LA(LGUI)))>, <&kp SQT>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <175>;
+            label = "SQT_HYPER";
+        };
+
+        // Tap: ESC | Hold: FUN layer (flo variant)
+        lt_esc_fun: lt_esc_fun {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&mo>, <&kp>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <175>;
+            label = "LT_ESC_FUN";
+        };
+
+        // Tap: SPC | Hold: NAV layer (flo variant, urob-style space-hold nav)
+        lt_spc_nav: lt_spc_nav {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&mo>, <&kp>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <175>;
+            label = "LT_SPC_NAV";
+        };
+
+        // Tap: BSPC | Hold: FUN layer (flo variant)
+        lt_bspc_fun: lt_bspc_fun {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&mo>, <&kp>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <175>;
+            label = "LT_BSPC_FUN";
+        };
+    };
+
+    macros {
+        region_capture2: region_capture2 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press>,
+                <&kp RCTRL>,
+                <&macro_tap>,
+                <&kp K_APP>,
+                <&macro_release>,
+                <&kp RCTRL>;
+
+            label = "REGION_CAPTURE2";
+        };
+    };
+};
