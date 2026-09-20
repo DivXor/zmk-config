@@ -62,7 +62,7 @@
             bindings = <
                 &kp ESC   &kp Q                &kp W &kp E &kp R &kp T              &kp Y &kp U      &kp I      &kp O     &kp P        &kp BSPC
                 &kp TAB   &hm_shift_l LSHFT A &hm_l LCTRL S &hm_l LALT D &hm_l LGUI F &kp G    &kp H &hm_r RGUI J &hm_r RALT K &hm_r RCTRL L &hm_shift_r RSHFT SEMICOLON &kp SQT
-                &kp DEL   &kp Z &kp X &kp C &kp V &kp B                         &kp N &kp M  &kp COMMA &kp DOT &kp SLASH &sqt_hyper SQT LC(LS(LA(LGUI)))
+                &kp DEL   &kp Z &kp X &kp C &kp V &kp B                         &kp N &kp M  &kp COMMA &kp DOT &kp SLASH &sqt_hyper LC(LS(LA(LGUI))) SQT
                                 &lt_esc_fun FUN ESC  &mo SYM   &kp RET     &lt_spc_nav NAV SPACE   &mo NUM   &lt_bspc_fun FUN BSPC
             >;
         };

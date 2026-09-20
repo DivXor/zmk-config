@@ -26,7 +26,7 @@
         // Tap: ' | Hold: Hyper (Ctrl+Alt+Shift+Gui) — IntelliJ combos.
         // Bare phandles + call-site args (like hm_l): Zephyr 4.1's /behaviors
         // extraction pass rejects argument cells inside the bindings property.
-        // Usage: &sqt_hyper SQT LC(LS(LA(LGUI)))
+        // Usage: &sqt_hyper LC(LS(LA(LGUI))) SQT   (hold param first, like &hm_l / &lt)
         sqt_hyper: sqt_hyper {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
