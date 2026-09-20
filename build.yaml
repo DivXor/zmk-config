@@ -68,111 +68,111 @@ include:
   # --- Variant A: "flo-core" (layer-tap thumbs, real mods on free hand) ---
   - board: xiao_ble//zmk
     shield: totem_left
-    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=config/keymaps/flo_totem.keymap
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/flo_totem.keymap
     artifact-name: totem-flo-left
   - board: xiao_ble//zmk
     shield: totem_right
-    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=config/keymaps/flo_totem.keymap
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/flo_totem.keymap
     artifact-name: totem-flo-right
   - board: xiao_ble//zmk
     shield: totem_dongle prospector_adapter
-    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=config/keymaps/flo_totem.keymap
+    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/flo_totem.keymap
     snippet: zmk-usb-logging studio-rpc-usb-uart
     artifact-name: totem-flo-dongle
   - board: nice_nano//zmk
     shield: kometa_left
-    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=config/keymaps/flo_kometa.keymap
+    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/flo_kometa.keymap
     snippet: studio-rpc-usb-uart
     artifact-name: kometa-flo-left
   - board: nice_nano//zmk
     shield: kometa_right
-    cmake-args: -DKEYMAP_FILE=config/keymaps/flo_kometa.keymap
+    cmake-args: -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/flo_kometa.keymap
     artifact-name: kometa-flo-right
   - board: nice_nano//zmk
     shield: kometa_left
-    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=config/keymaps/flo_kometa.keymap
+    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/flo_kometa.keymap
     artifact-name: kometa-flo-dongle-left
   - board: nice_nano//zmk
     shield: kometa_right
-    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=config/keymaps/flo_kometa.keymap
+    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/flo_kometa.keymap
     artifact-name: kometa-flo-dongle-right
   - board: xiao_ble//zmk
     shield: kometa_dongle prospector_adapter
-    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=config/keymaps/flo_kometa.keymap
+    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/flo_kometa.keymap
     snippet: zmk-usb-logging studio-rpc-usb-uart
     artifact-name: kometa-flo-dongle
 
   # --- Variant B: "seniply-core" (sticky one-shot mods, pure thumb holds) ---
   - board: xiao_ble//zmk
     shield: totem_left
-    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=config/keymaps/sen_totem.keymap
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/sen_totem.keymap
     artifact-name: totem-sen-left
   - board: xiao_ble//zmk
     shield: totem_right
-    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=config/keymaps/sen_totem.keymap
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/sen_totem.keymap
     artifact-name: totem-sen-right
   - board: xiao_ble//zmk
     shield: totem_dongle prospector_adapter
-    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=config/keymaps/sen_totem.keymap
+    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/sen_totem.keymap
     snippet: zmk-usb-logging studio-rpc-usb-uart
     artifact-name: totem-sen-dongle
   - board: nice_nano//zmk
     shield: kometa_left
-    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=config/keymaps/sen_kometa.keymap
+    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/sen_kometa.keymap
     snippet: studio-rpc-usb-uart
     artifact-name: kometa-sen-left
   - board: nice_nano//zmk
     shield: kometa_right
-    cmake-args: -DKEYMAP_FILE=config/keymaps/sen_kometa.keymap
+    cmake-args: -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/sen_kometa.keymap
     artifact-name: kometa-sen-right
   - board: nice_nano//zmk
     shield: kometa_left
-    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=config/keymaps/sen_kometa.keymap
+    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/sen_kometa.keymap
     artifact-name: kometa-sen-dongle-left
   - board: nice_nano//zmk
     shield: kometa_right
-    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=config/keymaps/sen_kometa.keymap
+    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/sen_kometa.keymap
     artifact-name: kometa-sen-dongle-right
   - board: xiao_ble//zmk
     shield: kometa_dongle prospector_adapter
-    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=config/keymaps/sen_kometa.keymap
+    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/sen_kometa.keymap
     snippet: zmk-usb-logging studio-rpc-usb-uart
     artifact-name: kometa-sen-dongle
 
   # --- Variant C: "callum-core" (half-layer mods on both thumbs) ---
   - board: xiao_ble//zmk
     shield: totem_left
-    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=config/keymaps/cal_totem.keymap
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/cal_totem.keymap
     artifact-name: totem-cal-left
   - board: xiao_ble//zmk
     shield: totem_right
-    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=config/keymaps/cal_totem.keymap
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/cal_totem.keymap
     artifact-name: totem-cal-right
   - board: xiao_ble//zmk
     shield: totem_dongle prospector_adapter
-    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=config/keymaps/cal_totem.keymap
+    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/cal_totem.keymap
     snippet: zmk-usb-logging studio-rpc-usb-uart
     artifact-name: totem-cal-dongle
   - board: nice_nano//zmk
     shield: kometa_left
-    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=config/keymaps/cal_kometa.keymap
+    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/cal_kometa.keymap
     snippet: studio-rpc-usb-uart
     artifact-name: kometa-cal-left
   - board: nice_nano//zmk
     shield: kometa_right
-    cmake-args: -DKEYMAP_FILE=config/keymaps/cal_kometa.keymap
+    cmake-args: -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/cal_kometa.keymap
     artifact-name: kometa-cal-right
   - board: nice_nano//zmk
     shield: kometa_left
-    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=config/keymaps/cal_kometa.keymap
+    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/cal_kometa.keymap
     artifact-name: kometa-cal-dongle-left
   - board: nice_nano//zmk
     shield: kometa_right
-    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=config/keymaps/cal_kometa.keymap
+    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/cal_kometa.keymap
     artifact-name: kometa-cal-dongle-right
   - board: xiao_ble//zmk
     shield: kometa_dongle prospector_adapter
-    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=config/keymaps/cal_kometa.keymap
+    cmake-args: -DCONFIG_ZMK_STUDIO=y -DKEYMAP_FILE=$GITHUB_WORKSPACE/config/keymaps/cal_kometa.keymap
     snippet: zmk-usb-logging studio-rpc-usb-uart
     artifact-name: kometa-cal-dongle
 
